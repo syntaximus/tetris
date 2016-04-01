@@ -1,10 +1,37 @@
 ﻿<Window x:Class="Tetris.Views.MainWindowView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Tetris" Height="350" Width="300">
+        Title="Tetris" Height="550" Width="400" ResizeMode="NoResize">
     <Grid>
         <Button x:Name="NewGame" Content="Nowa gra" Visibility="{Binding MenuVisibility}" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Height ="40" Width="175"/>
         <Button x:Name="Records" Content="Najlepsze wyniki" Visibility="{Binding MenuVisibility}" HorizontalAlignment="Center" Margin="0,125,0,0" VerticalAlignment="Top" Height ="40" Width="175"/>
         <Button x:Name="Exit" Content="Wyjście" HorizontalAlignment="Center" Visibility="{Binding MenuVisibility}" Margin="0,200,0,0" VerticalAlignment="Top" Height ="40" Width="175"/>
+        <Label x:Name="NextBlockLabel" HorizontalAlignment="Left" Visibility="{Binding GameVisibility}" Margin="10,5,0,0" VerticalAlignment="Top">
+            <TextBlock TextAlignment="Right">Następny<LineBreak/>Klocek</TextBlock>
+        </Label>
+        <Label x:Name="LevelLabel" Content="Poziom:" HorizontalAlignment="Left" Visibility="{Binding GameVisibility}" Margin="130,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="PointsLabel" Content="Punkty:" HorizontalAlignment="Left" Visibility="{Binding GameVisibility}" Margin="210,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Level" HorizontalAlignment="Left" Visibility="{Binding GameVisibility}" Margin="177,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Points" HorizontalAlignment="Left" Visibility="{Binding GameVisibility}" Margin="252,10,0,0" VerticalAlignment="Top"/>
+        <ItemsControl ItemsSource="{Binding RectItems}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding GameVisibility}" Background="Black" Margin="0,50,0,0"  />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Width="{Binding Width}" Height="{Binding Height}" Fill="{Binding Color}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+
     </Grid>
 </Window>
