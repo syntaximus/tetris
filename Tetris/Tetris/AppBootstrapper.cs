@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows;
 using Caliburn.Micro;
-using System.Windows;
 using Tetris.ViewModels;
 
 namespace Tetris
 {
-
     public class AppBootstrapper : BootstrapperBase
     {
         public AppBootstrapper()
