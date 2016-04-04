@@ -88,17 +88,6 @@ namespace Tetris.ViewModels
             set { _game = value; }
         }
 
-        public Views.MainWindowView Binding
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
 
         public void ExecuteFilterView(ActionExecutionContext context)
         {

@@ -103,34 +103,20 @@
         </TypeIdentifier>
       </Class>
     </NestedTypes>
-    <AssociationLine Name="Binding" Type="Tetris.Views.MainWindowView">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.311" Y="0.518" />
-      </MemberNameLabel>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>IAAAAAABAABAgAAAAAAAAAAABAgIAAAJIIBgUAAAICU=</HashCode>
+      <HashCode>IAAAAAABAABAgAAAAAAAAAAABAgIAAAJIIBgUAAAIAU=</HashCode>
       <FileName>ViewModels\MainWindowViewModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Game" />
-      <Property Name="Binding" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Tetris.Views.MainWindowView" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="7" Y="5.5" Width="1.75" />
-    <AssociationLine Name="Binding" Type="Tetris.ViewModels.MainWindowViewModel">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.899" Y="0.419" />
-      </MemberNameLabel>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\MainWindowView.xaml.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Binding" />
-    </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Tetris.AppBootstrapper" Collapsed="true">

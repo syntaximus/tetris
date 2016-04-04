@@ -23,17 +23,5 @@ namespace Tetris.Views
             Canvas.SetTop(rect, -5);
             NextBlockView.Children.Add(rect);
         }
-
-        public ViewModels.MainWindowViewModel Binding
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
-        }
     }
 }
