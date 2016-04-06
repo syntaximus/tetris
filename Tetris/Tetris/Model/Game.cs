@@ -60,7 +60,7 @@ namespace Tetris.Model
 
         private void MoveDown_Tick(object sender, EventArgs e)
         {
-            if (Board.CurrentBlock.CanDown())
+            if (Board.CurrentBlock.CanMoveDown)
             {
                 Board.CurrentBlockMoveDown();
             }
@@ -114,16 +114,13 @@ namespace Tetris.Model
             switch (keyArgs.Key)
             {
                 case Key.Up:
-                    if (Board.CurrentBlock.CanRotate())
-                        Board.CurrentBlock.Rotate();
+                    Board.CurrentBlockRotate();
                     break;
                 case Key.Right:
-                    if(Board.CanMoveRight())
-                    Board.CurrentBlock.Right();
+                    Board.CurrentBlockMoveRight();
                     break;
                 case Key.Left:
-                    if (Board.CanMoveLeft())
-                        Board.CurrentBlock.Left();
+                    Board.CurrentBlockMoveLeft();
                     break;
                 case Key.Down:
                     Board.CurrentBlockMoveDown();

@@ -22,8 +22,9 @@ namespace Tetris.Model.Blocks
             Color = new SolidColorBrush(Colors.Aqua);
         }
 
-        public override void Rotate()
+        public override bool TryRotate()
         {
+            return true;
         }
 
         public override bool[,] ShowRotate()

@@ -9,138 +9,145 @@ namespace Tetris.Model.Blocks
 
         public Brush Color;
         public bool[,] Surface;
-        public abstract void Rotate();
+        public abstract bool TryRotate();
         public abstract bool[,] ShowRotate();
 
-        public bool CanRotate()
+        public bool CanRotate
         {
-            bool[,] surface = ShowRotate();
-            if (X == 0)
-                return false;
-            for (int i = 0; i != surface.GetLength(1); i++)
+            get
             {
-                if (surface[i, 0])
+
+                bool[,] surface = ShowRotate();
+
+                if (X == 0 || X == 10)
+                    return false;
+                for (int i = 0; i != surface.GetLength(1); i++)
                 {
-                    if (X + 1 <= 2)
+                    if (surface[i, 0] && X + 1 <= 2)
+                    {
                         return false;
+                    }
+                    if (surface[i, 1])
+                    {
+                        if (X + 1 <= 1)
+                            return false;
+                    }
+
+
+                    if (surface[i, 3])
+                    {
+                        if (X - 1 >= 8)
+                            return false;
+                    }
+
+                    if (surface[i, 2])
+                    {
+                        if (X - 1 >= 9)
+                            return false;
+                    }
+                    if (surface[1, i])
+                    {
+                        if (Y - 1 >= 18)
+                            return false;
+                    }
+                    if (surface[2, i])
+                    {
+                        if (Y - 1 >= 17)
+                            return false;
+                    }
+                    if (surface[3, i])
+                    {
+                        if (Y - 1 >= 16)
+                            return false;
+                    }
+
+
                 }
-                if (surface[i, 1])
-                {
-                    if (X + 1 <= 1)
-                        return false;
-                }
+                return true;
             }
-            if (X == 10)
-                return false;
-
-            for (int i = 0; i != surface.GetLength(1); i++)
-            {
-                if (surface[i, 3])
-                {
-                    if (X - 1 >= 8)
-                        return false;
-                }
-
-                if (surface[i, 2])
-                {
-                    if (X - 1 >= 9)
-                        return false;
-                }
-                if (surface[1, i])
-                {
-                    if (Y - 1 >= 18)
-                        return false;
-                }
-                if (surface[2, i])
-                {
-                    if (Y - 1 >= 17)
-                        return false;
-                }
-                if (surface[3, i])
-                {
-                    if (Y - 1 >= 16)
-                        return false;
-                }
-
-
-            }
-            return true;
         }
 
-        public bool CanDown()
+        public bool CanMoveDown
         {
-            for (int i = 0; i != Surface.GetLength(0); i++)
+            get
             {
-                if (Surface[1, i])
+                for (int i = 0; i != Surface.GetLength(0); i++)
                 {
-                    if (Y >= 18)
-                        return false;
-                }
-                if (Surface[2, i])
-                {
-                    if (Y >= 17)
-                        return false;
-                }
-                if (Surface[3, i])
-                {
-                    if (Y >= 16)
-                        return false;
-                }
+                    if (Surface[1, i])
+                    {
+                        if (Y >= 18)
+                            return false;
+                    }
+                    if (Surface[2, i])
+                    {
+                        if (Y >= 17)
+                            return false;
+                    }
+                    if (Surface[3, i])
+                    {
+                        if (Y >= 16)
+                            return false;
+                    }
 
+                }
+                return true;
             }
-            return true;
         }
 
-        public void Left()
+        public bool TryMoveLeft()
         {
             if (X == 0)
-                return;
+                return false;
             for (int i = 0; i != Surface.GetLength(1); i++)
             {
                 if (Surface[i, 0])
                 {
                     if (X <= 2)
-                        return;
+                        return false;
                 }
                 if (Surface[i, 1])
                 {
                     if (X <= 1)
-                        return;
+                        return false;
                 }
             }
             X--;
+            return true;
         }
 
-        public void Right()
+        public bool TryMoveRight()
         {
             if (X == 10)
-                return;
+                return false;
 
             for (int i = 0; i != Surface.GetLength(1); i++)
             {
                 if (Surface[i, 3])
                 {
                     if (X >= 8)
-                        return;
+                        return false;
                 }
 
                 if (Surface[i, 2])
                 {
                     if (X >= 9)
-                        return;
+                        return false;
                 }
 
 
             }
             X++;
+            return true;
         }
 
-        public void MoveDown()
+        public bool TryMoveDown()
         {
-            if (CanDown())
+            if (CanMoveDown)
             {
                 Y++;
+                return true;
             }
+            return false;
         }
     }
 }
