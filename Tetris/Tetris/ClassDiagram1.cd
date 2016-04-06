@@ -84,7 +84,7 @@
   <Class Name="Tetris.Model.Game" Collapsed="true">
     <Position X="7" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAABAAAAACAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAIAAAAAAAAABAABgAiAAAAE=</HashCode>
       <FileName>Model\Game.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -96,15 +96,8 @@
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
-    <NestedTypes>
-      <Class Name="Tetris.ViewModels.MainWindowViewModel.RectItem" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>ViewModels\MainWindowViewModel.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>IAAAAAABAABAgAAAAAAAAAAABAgIAAAJIIBgUAAAIAU=</HashCode>
+      <HashCode>IAAAAAABAABAgAAAAAAAAAAAFAgIAAAJIJBgUAAAIAA=</HashCode>
       <FileName>ViewModels\MainWindowViewModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>

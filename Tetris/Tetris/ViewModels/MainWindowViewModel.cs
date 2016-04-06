@@ -9,13 +9,27 @@ using Tetris.Model;
 
 namespace Tetris.ViewModels
 {
+    public class RectItem
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public Brush Color { get; set; }
+    }
     public class MainWindowViewModel : PropertyChangedBase
     {
+
+        /// <summary>
+        /// Zmienna która odpowiada za odświeżanie widoku kontrolek. Po takim czasie jest przekazywana informacja do view modelu o aktualizacji wyświetlania menu
+        /// (W milisekundach).
+        /// </summary>
+        public const int ControlsVisibleInterval = 100;
+
         private Visibility _gameVisibility;
         private Visibility _menuVisibility;
         private Visibility _recordsVisibility;
-        private Game _game;
-        public int x = 45;
+        public int x = 0;
         public int y;
 
         public MainWindowViewModel()
@@ -61,32 +75,33 @@ namespace Tetris.ViewModels
 
         public string Level
         {
-            get { return _game.Level.ToString(); }
+            get
+            {
+                return Game.Level.ToString();
+            }
             set
             {
-                _game.Level = int.Parse(value);
+                Game.Level = int.Parse(value);
                 NotifyOfPropertyChange("Level");
             }
         }
 
         public string Points
         {
-            get { return _game.Points.ToString(); }
+            get
+            {
+                return Game.Points.ToString();
+            }
             set
             {
-                _game.Points = int.Parse(value);
+                Game.Points = int.Parse(value);
                 NotifyOfPropertyChange("Points");
             }
         }
 
         public ObservableCollection<RectItem> RectItems { get; set; }
 
-        public Game Game
-        {
-            get { return _game; }
-
-            set { _game = value; }
-        }
+        public Game Game { get; set; }
 
 
         public void ExecuteFilterView(ActionExecutionContext context)
@@ -95,53 +110,7 @@ namespace Tetris.ViewModels
 
             if (GameVisibility == Visibility.Visible && keyArgs != null)
             {
-                var add = new RectItem();
-                switch (keyArgs.Key)
-                {
-                    case Key.Up:
-                        add = new RectItem();
-                        y -= 30;
-                        add.Height = 30;
-                        add.Width = 30;
-                        add.X = x;
-                        add.Y = y;
-                        add.Color = new SolidColorBrush(Colors.Blue);
-                        RectItems[0] = add;
-
-                        break;
-                    case Key.Down:
-                        y += 30;
-                        add.Height = 30;
-                        add.Width = 30;
-                        add.X = x;
-                        add.Y = y;
-                        add.Color = new SolidColorBrush(Colors.Blue);
-                        RectItems[0] = add;
-
-                        break;
-                    case Key.Right:
-                        x += 30;
-                        add = new RectItem();
-                        add.Height = 30;
-                        add.Width = 30;
-                        add.X = x;
-                        add.Y = y;
-                        add.Color = new SolidColorBrush(Colors.Blue);
-                        RectItems[0] = add;
-
-                        break;
-                    case Key.Left:
-                        x -= 30;
-                        add = new RectItem();
-                        add.Height = 30;
-                        add.Width = 30;
-                        add.X = x;
-                        add.Y = y;
-                        add.Color = new SolidColorBrush(Colors.Blue);
-                        RectItems[0] = add;
-
-                        break;
-                }
+                Game.KeyboardEventHandler(keyArgs);
             }
         }
 
@@ -150,55 +119,24 @@ namespace Tetris.ViewModels
             Application.Current.MainWindow.Close();
         }
 
-        public async void NewGame()
+        public void NewGame()
         {
-            Game = new Game();
+            Game = new Game(RectItems);
             MenuVisibility = Visibility.Hidden;
             RecordsVisibility = Visibility.Hidden;
             GameVisibility = Visibility.Visible;
 
-            var add = new RectItem();
-            add.Height = 40;
-            add.Width = 40;
-            add.X = 40;
-            add.Y = 40;
-            add.Color = new SolidColorBrush(Colors.Red);
-            RectItems.Add(add);
-            NotifyOfPropertyChange("RectItems");
+            var notifyOfPropertyChangeDispatcherTimer = new DispatcherTimer();
+            notifyOfPropertyChangeDispatcherTimer.Tick += notifyOfPropertyChange_Tick;
+            notifyOfPropertyChangeDispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, ControlsVisibleInterval);
+            notifyOfPropertyChangeDispatcherTimer.Start();
+        }
+
+        private void notifyOfPropertyChange_Tick(object sender, EventArgs e)
+        {
+
             NotifyOfPropertyChange("Points");
             NotifyOfPropertyChange("Level");
-
-            var dispatcherTimer = new DispatcherTimer();
-
-            var dispatcherTimer1 = new DispatcherTimer();
-            dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 300);
-            dispatcherTimer.Start();
-            dispatcherTimer1.Tick += dispatcherTimer_Tick1;
-            dispatcherTimer1.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer1.Start();
-        }
-
-        private void dispatcherTimer_Tick1(object sender, EventArgs e)
-        {
-            Level = (int.Parse(Level) + 1).ToString();
-            NotifyOfPropertyChange("Level");
-        }
-
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            // Updating the Label which displays the current second
-            y += 30;
-            var add = new RectItem();
-            add.Height = 30;
-            add.Width = 30;
-            add.X = x;
-            add.Y = y;
-            add.Color = new SolidColorBrush(Colors.Blue);
-            RectItems[0] = add;
-
-            NotifyOfPropertyChange("RectItems");
-            CommandManager.InvalidateRequerySuggested();
         }
 
         public void Records()
@@ -208,13 +146,5 @@ namespace Tetris.ViewModels
             GameVisibility = Visibility.Hidden;
         }
 
-        public class RectItem
-        {
-            public double X { get; set; }
-            public double Y { get; set; }
-            public double Width { get; set; }
-            public double Height { get; set; }
-            public Brush Color { get; set; }
-        }
     }
 }

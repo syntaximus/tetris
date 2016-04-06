@@ -26,7 +26,7 @@ namespace Tetris.Model.Blocks
         {
         }
 
-        public bool[,] ShowRotate()
+        public override bool[,] ShowRotate()
         {
             return Surface;
         }

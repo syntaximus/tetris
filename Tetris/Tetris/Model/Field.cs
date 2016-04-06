@@ -7,9 +7,10 @@ namespace Tetris.Model
         public bool Active;
         public Brush Color;
 
-        public Field(Color color)
+        public Field(Brush color)
         {
-            Color = new SolidColorBrush(color);
+            Color = color;
+            Active = true;
         }
     }
 }

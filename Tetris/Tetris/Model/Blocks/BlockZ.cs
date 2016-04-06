@@ -32,7 +32,7 @@ namespace Tetris.Model.Blocks
             Surface = ShowRotate();
         }
 
-        public bool[,] ShowRotate()
+        public override bool[,] ShowRotate()
         {
             var rotateSurface = new bool[4, 4];
             for (var i = 0; i < 3; i++)
