@@ -118,13 +118,15 @@ namespace Tetris.Model
                         Board.CurrentBlock.Rotate();
                     break;
                 case Key.Right:
+                    if(Board.CanMoveRight())
                     Board.CurrentBlock.Right();
                     break;
                 case Key.Left:
-                    Board.CurrentBlock.Left();
+                    if (Board.CanMoveLeft())
+                        Board.CurrentBlock.Left();
                     break;
                 case Key.Down:
-                    Board.CurrentBlock.MoveDown();
+                    Board.CurrentBlockMoveDown();
                     break;
             }
 
