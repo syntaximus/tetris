@@ -7,9 +7,9 @@
 
 //namespace Tetris.Model.Blocks
 //{
-//    internal class BlockTestow : Block
+//    internal class BlockAnia : Block
 //    {
-//        public BlockTestowy()
+//        public BlockAnia()
 //        {
 //            /*
 //            1 1 0 0
@@ -24,12 +24,12 @@
 //            */
 //            Surface = new[,]
 //            {
-//                {true, true, false, true},
+//                {true, false, false, true},
 //                {false, true, true, false},
-//                {false, false, true, false},
-//                {false, false, false, true}
+//                {false, true, true, false},
+//                {true, false, false, true}
 //            };
-//            Color = new SolidColorBrush(Colors.DarkOrange);
+//            Color = new SolidColorBrush(Colors.Pink);
 //        }
 
 //        public override bool TryRotate()

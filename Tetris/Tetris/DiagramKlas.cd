@@ -99,7 +99,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>IAEIAAARAgBAgAAAAAAQAAAAHAgYIEAJIJBgQAAIIAA=</HashCode>
+      <HashCode>IAEIAAARAgBAhAAAAAAQAAAAHAgYIEAJIJAAQAAIIAA=</HashCode>
       <FileName>ViewModels\MainWindowViewModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>

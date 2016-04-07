@@ -35,31 +35,23 @@ namespace Tetris.ViewModels
     }
     public class MainWindowViewModel : PropertyChangedBase
     {
-
+        #region CONST
         /// <summary>
         /// Zmienna która odpowiada za odświeżanie widoku kontrolek. Po takim czasie jest przekazywana informacja do view modelu o aktualizacji wyświetlania menu
         /// (W milisekundach).
         /// </summary>
         public const int ControlsVisibleInterval = 100;
+        #endregion
 
+        #region FIELDS
         private Visibility _gameVisibility;
         private Visibility _endGameVisibility;
         private Visibility _menuVisibility;
         private Visibility _recordsVisibility;
         private BindableCollection<Record> _recordsList;
-        public int x = 0;
-        public int y;
+        #endregion
 
-        public MainWindowViewModel()
-        {
-            MenuVisibility = Visibility.Visible;
-            EndGameVisibility = Visibility.Hidden;
-            RecordsVisibility = Visibility.Hidden;
-            GameVisibility = Visibility.Hidden;
-            RectItems = new ObservableCollection<RectItem>();
-            NextBlockRectItems = new ObservableCollection<RectItem>();
-        }
-
+        #region PROPERTIES
         public Visibility MenuVisibility
         {
             get { return _menuVisibility; }
@@ -80,7 +72,6 @@ namespace Tetris.ViewModels
                 NotifyOfPropertyChange("EndGameVisibility");
             }
         }
-
         public Visibility GameVisibility
         {
             get { return _gameVisibility; }
@@ -91,7 +82,6 @@ namespace Tetris.ViewModels
                 NotifyOfPropertyChange("GameVisibility");
             }
         }
-
         public Visibility RecordsVisibility
         {
             get { return _recordsVisibility; }
@@ -102,7 +92,6 @@ namespace Tetris.ViewModels
                 NotifyOfPropertyChange("RecordsVisibility");
             }
         }
-
         public string Level
         {
             get
@@ -115,7 +104,6 @@ namespace Tetris.ViewModels
                 NotifyOfPropertyChange("Level");
             }
         }
-
         public string Points
         {
             get
@@ -141,11 +129,8 @@ namespace Tetris.ViewModels
             }
         }
         public string PlayerName { get; set; }
-
         public ObservableCollection<RectItem> RectItems { get; set; }
         public ObservableCollection<RectItem> NextBlockRectItems { get; set; }
-
-
         public BindableCollection<Record> RecordsList
         {
 
@@ -157,30 +142,71 @@ namespace Tetris.ViewModels
             }
 
         }
-
         public Game Game { get; set; }
 
+        #endregion
 
-        public void ExecuteKeyboardCommand(ActionExecutionContext context)
+        #region PUBLIC METHODS
+        public MainWindowViewModel()
         {
-            var keyArgs = context.EventArgs as KeyEventArgs;
-
-            if (GameVisibility == Visibility.Visible && keyArgs != null)
+            MenuVisibility = Visibility.Visible;
+            EndGameVisibility = Visibility.Hidden;
+            RecordsVisibility = Visibility.Hidden;
+            GameVisibility = Visibility.Hidden;
+            RectItems = new ObservableCollection<RectItem>();
+            NextBlockRectItems = new ObservableCollection<RectItem>();
+        }
+        public void NewGame()
+        {
+            try
             {
-                Game.KeyboardEventHandler(keyArgs);
+                Game = new Game(RectItems, NextBlockRectItems);
+                Game.GameCompleted += GameOnGameCompleted;
+                MenuVisibility = Visibility.Hidden;
+                RecordsVisibility = Visibility.Hidden;
+                GameVisibility = Visibility.Visible;
+                EndGameVisibility = Visibility.Hidden;
+
+                var notifyOfPropertyChangeDispatcherTimer = new DispatcherTimer();
+                notifyOfPropertyChangeDispatcherTimer.Tick += notifyOfPropertyChange_Tick;
+                notifyOfPropertyChangeDispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, ControlsVisibleInterval);
+                notifyOfPropertyChangeDispatcherTimer.Start();
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
-
-        public string ProcessPlayerName(string playerName)
+        public void Records()
         {
-            if (playerName == null)
-                return "<<nieznane>>";
-            if (playerName.Length > 14)
-                playerName = playerName.Remove(14);
-            return playerName;
-            
+            MenuVisibility = Visibility.Hidden;
+            RecordsVisibility = Visibility.Visible;
+            GameVisibility = Visibility.Hidden;
+            BindableCollection<Record> recrd = new BindableCollection<Record>();
+            List<Record> records;
+            IFormatter formatter = new BinaryFormatter();
+            using (
+                Stream stream = new FileStream("Records.bin", FileMode.OpenOrCreate, FileAccess.ReadWrite,
+                    FileShare.ReadWrite))
+            {
+                try
+                {
+                    records = (List<Record>)formatter.Deserialize(stream);
+                }
+                catch (SerializationException)
+                {
+                    records = new List<Record>();
+                }
+            }
+            records = records.OrderByDescending(x => x.Points).ToList();
+            for (int i = 0; i != records.Count && i < 10; i++)
+                recrd.Add(records[i]);
+            RecordsList = recrd;
         }
-
+        public void Exit()
+        {
+            Application.Current.MainWindow.Close();
+        }
         public void SaveRecord()
         {
             Record record = new Record(Int32.Parse(Points), ProcessPlayerName(PlayerName));
@@ -219,7 +245,6 @@ namespace Tetris.ViewModels
             EndGameVisibility = Visibility.Hidden;
 
         }
-
         public void RecordsOk()
         {
             MenuVisibility = Visibility.Visible;
@@ -227,42 +252,66 @@ namespace Tetris.ViewModels
             GameVisibility = Visibility.Hidden;
             EndGameVisibility = Visibility.Hidden;
         }
-        public void Exit()
+        public void ExecuteKeyboardCommand(ActionExecutionContext context)
         {
-            Application.Current.MainWindow.Close();
-        }
+            var keyArgs = context.EventArgs as KeyEventArgs;
 
-        public void NewGame()
-        {
-            try
+            if (GameVisibility == Visibility.Visible && keyArgs != null)
             {
-                Game = new Game(RectItems, NextBlockRectItems);
-                Game.GameCompleted += delegate (object sender, EventArgs args)
+                Game.KeyboardEventHandler(keyArgs);
+            }
+        }
+        #endregion
+
+        #region PRIVATE METHODS
+        private string ProcessPlayerName(string playerName)
+        {
+            if (playerName == null)
+                return "<<nieznane>>";
+            if (playerName.Length > 14)
+                playerName = playerName.Remove(14);
+            return playerName;
+
+        }
+        private void GameOnGameCompleted(object sender, EventArgs eventArgs)
+        {
+            {
+                List<Record> records;
+                IFormatter formatter = new BinaryFormatter();
+                using (
+                    Stream stream = new FileStream("Records.bin", FileMode.OpenOrCreate, FileAccess.ReadWrite,
+                        FileShare.ReadWrite))
+                {
+                    try
+                    {
+                        records = (List<Record>)formatter.Deserialize(stream);
+                    }
+                    catch (SerializationException)
+                    {
+                        records = new List<Record>();
+                    }
+                }
+                records = records.OrderByDescending(x => x.Points).ToList();
+                if (records[records.Count - 1].Points < Int32.Parse(Points) || records.Count < 10)
                 {
                     NotifyOfPropertyChange("RecordPoints");
                     MenuVisibility = Visibility.Hidden;
                     RecordsVisibility = Visibility.Hidden;
                     GameVisibility = Visibility.Hidden;
                     EndGameVisibility = Visibility.Visible;
-                    Game.StopGame();
+                }
+                else
+                {
+                    NotifyOfPropertyChange("RecordPoints");
+                    MenuVisibility = Visibility.Visible;
+                    RecordsVisibility = Visibility.Hidden;
+                    GameVisibility = Visibility.Hidden;
+                    EndGameVisibility = Visibility.Hidden;
+                }
+                Game.StopGame();
 
-                };
-                MenuVisibility = Visibility.Hidden;
-                RecordsVisibility = Visibility.Hidden;
-                GameVisibility = Visibility.Visible;
-                EndGameVisibility = Visibility.Hidden;
-
-                var notifyOfPropertyChangeDispatcherTimer = new DispatcherTimer();
-                notifyOfPropertyChangeDispatcherTimer.Tick += notifyOfPropertyChange_Tick;
-                notifyOfPropertyChangeDispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, ControlsVisibleInterval);
-                notifyOfPropertyChangeDispatcherTimer.Start();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            };
         }
-
         private void notifyOfPropertyChange_Tick(object sender, EventArgs e)
         {
             try
@@ -279,33 +328,6 @@ namespace Tetris.ViewModels
             }
 
         }
-
-        public void Records()
-        {
-            MenuVisibility = Visibility.Hidden;
-            RecordsVisibility = Visibility.Visible;
-            GameVisibility = Visibility.Hidden;
-            BindableCollection<Record> recrd = new BindableCollection<Record>();
-            List<Record> records;
-            IFormatter formatter = new BinaryFormatter();
-            using (
-                Stream stream = new FileStream("Records.bin", FileMode.OpenOrCreate, FileAccess.ReadWrite,
-                    FileShare.ReadWrite))
-            {
-                try
-                {
-                    records = (List<Record>)formatter.Deserialize(stream);
-                }
-                catch (SerializationException)
-                {
-                    records = new List<Record>();
-                }
-            }
-            records = records.OrderByDescending(x => x.Points).ToList();
-            for(int i =0 ;i!=records.Count;i++)
-                recrd.Add(records[i]);
-            RecordsList = recrd;
-        }
-
+        #endregion
     }
 }

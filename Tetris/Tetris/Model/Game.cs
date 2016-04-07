@@ -40,6 +40,7 @@ namespace Tetris.Model
         #region PUBLIC METHODS
         public Game(ObservableCollection<RectItem> rectItems, ObservableCollection<RectItem> nextBlockRectItems)
         {
+
             Board = new Board();
             Board.GenerateNewCurrentBlock();
             Points = 0;
