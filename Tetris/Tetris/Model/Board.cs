@@ -11,18 +11,11 @@ namespace Tetris.Model
 {
     public class Board : IDisposable
     {
-        public Board()
-        {
-            GameBoard = new Field[20, 10];
-            Random rand = new Random();
-            NextBlock = rand.Next(0, 6);
-        }
-        public int NextBlock { get; set; }
-        public Field[,] GameBoard { get; set; }
-        public Block CurrentBlock { get; set; }
+        #region PROPERTIES
         /// <summary>
         /// Właściwość która zwarca informacje czy nie dojdzie do koloizji aktualnie spadającego bloku z jakimś innym blokiem po przesunięciu klocka o jeden w dół.
         /// </summary>
+
         public bool CanCurrentBlockMoveDown
         {
             get
@@ -152,6 +145,20 @@ namespace Tetris.Model
             }
         }
 
+        public int NextBlock { get; set; }
+
+        public Field[,] GameBoard { get; set; }
+
+        public Block CurrentBlock { get; set; }
+        #endregion
+
+        #region PUBLIC METHODS
+        public Board()
+        {
+            GameBoard = new Field[20, 10];
+            Random rand = new Random();
+            NextBlock = rand.Next(0, 6);
+        }
         public void CurrentBlockMoveLeft()
         {
             if (CanCurrentBlockMoveLeft)
@@ -185,8 +192,21 @@ namespace Tetris.Model
                 return GenerateNewCurrentBlock();
             }
         }
+        public bool GenerateNewCurrentBlock()
+        {
+            Random rand = new Random();
+            IEnumerable<Block> exporters = (typeof(Block)
+                .Assembly.GetTypes()
+                .Where(t => t.IsSubclassOf(typeof(Block)) && !t.IsAbstract)
+                .Select(t => (Block)Activator.CreateInstance(t)));
+            CurrentBlock = exporters.ToList()[NextBlock];
 
+            CurrentBlock.X = 5;
+            CurrentBlock.Y = 0;
+            NextBlock = rand.Next(0, exporters.Count());
 
+            return CanPlaceCurrentBlock;
+        }
         public int CheckRows()
         {
             int deletedRows = 0;
@@ -205,7 +225,9 @@ namespace Tetris.Model
             }
             return deletedRows;
         }
+        #endregion
 
+        #region PRIVATE METHODS
         private void DeleteRow(int row)
         {
             for (int i = row; i != 0; i--)
@@ -216,24 +238,7 @@ namespace Tetris.Model
                 }
             }
         }
-
-        public bool GenerateNewCurrentBlock()
-        {
-            Random rand = new Random();
-            IEnumerable<Block> exporters = (typeof (Block)
-                .Assembly.GetTypes()
-                .Where(t => t.IsSubclassOf(typeof (Block)) && !t.IsAbstract)
-                .Select(t => (Block) Activator.CreateInstance(t)));
-            CurrentBlock = exporters.ToList()[NextBlock];
-
-            CurrentBlock.X = 5;
-            CurrentBlock.Y = 0;
-            NextBlock = rand.Next(0, exporters.Count());
-
-            return CanPlaceCurrentBlock;
-        }
-
-        internal void SaveCurrentBlockInBoard()
+        private void SaveCurrentBlockInBoard()
         {
             for (int i = 0; i != CurrentBlock.Surface.GetLength(0); i++)
             {
@@ -246,7 +251,7 @@ namespace Tetris.Model
                 }
             }
         }
-
+        #endregion
 
         #region IDisposable
         private bool _disposed = false;

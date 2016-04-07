@@ -156,7 +156,7 @@ namespace Tetris.ViewModels
             RectItems = new ObservableCollection<RectItem>();
             NextBlockRectItems = new ObservableCollection<RectItem>();
         }
-        public void NewGame()
+        public void StartNewGame()
         {
             try
             {
@@ -168,7 +168,7 @@ namespace Tetris.ViewModels
                 EndGameVisibility = Visibility.Hidden;
 
                 var notifyOfPropertyChangeDispatcherTimer = new DispatcherTimer();
-                notifyOfPropertyChangeDispatcherTimer.Tick += notifyOfPropertyChange_Tick;
+                notifyOfPropertyChangeDispatcherTimer.Tick += NotifyOfPropertyChange_Tick;
                 notifyOfPropertyChangeDispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, ControlsVisibleInterval);
                 notifyOfPropertyChangeDispatcherTimer.Start();
             }
@@ -177,7 +177,7 @@ namespace Tetris.ViewModels
                 throw e;
             }
         }
-        public void Records()
+        public void ShowRecords()
         {
             MenuVisibility = Visibility.Hidden;
             RecordsVisibility = Visibility.Visible;
@@ -312,7 +312,7 @@ namespace Tetris.ViewModels
 
             };
         }
-        private void notifyOfPropertyChange_Tick(object sender, EventArgs e)
+        private void NotifyOfPropertyChange_Tick(object sender, EventArgs e)
         {
             try
             {

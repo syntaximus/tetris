@@ -16,9 +16,15 @@ namespace Tetris.Model
 {
     public class Game : IDisposable
     {
-        #region CONST VALUES
+        #region CONST
         private const int BlockWidth = 30;
         private const int BlockHeight = 30;
+        #endregion
+
+        #region FIELDS
+        private DispatcherTimer _moveDownTimer;
+        private DispatcherTimer _levelUpTimer;
+        private DispatcherTimer _refreshCanvasTimer;
         #endregion
 
         #region PROPERTIES
@@ -29,12 +35,6 @@ namespace Tetris.Model
         public int Level { get; set; }
         public int Points { get; set; }
         public Board Board { get; set; }
-        #endregion
-
-        #region FIELDS
-        private DispatcherTimer _moveDownTimer;
-        private DispatcherTimer _levelUpTimer;
-        private DispatcherTimer _refreshCanvasTimer;
         #endregion
 
         #region PUBLIC METHODS
@@ -48,6 +48,33 @@ namespace Tetris.Model
             CanvasRectItems = rectItems;
             CanvasNextBlockRectItems = nextBlockRectItems;
             InitializeTimers();
+        }
+        private void EndGame()
+        {
+
+            OnGameCompleted(new EventArgs());
+        }
+        public void PauseGame()
+        {
+            _moveDownTimer.Stop();
+            _levelUpTimer.Stop();
+            _refreshCanvasTimer.Stop();
+        }
+        public void ResumeGame()
+        {
+            _moveDownTimer.Start();
+            _levelUpTimer.Start();
+            _refreshCanvasTimer.Start();
+        }
+        public void StopGame()
+        {
+            Board.GameBoard = new Field[20, 10];
+            Board.CurrentBlock = null;
+            RefreshCanvas();
+            _moveDownTimer.Stop();
+            _levelUpTimer.Stop();
+            _refreshCanvasTimer.Stop();
+
         }
         public void KeyboardEventHandler(KeyEventArgs keyArgs)
         {
@@ -87,48 +114,6 @@ namespace Tetris.Model
         #endregion
 
         #region PRIVATE METHODS
-
-        private void EndGame()
-        {
-
-            OnGameCompleted(new EventArgs());
-        }
-        public void NewGame(ObservableCollection<RectItem> rectItems)
-        {
-            Board = new Board();
-            Board.GenerateNewCurrentBlock();
-            Points = 0;
-            Level = 1;
-            CanvasRectItems = rectItems;
-            InitializeTimers();
-        }
-
-        public void PauseGame()
-        {
-            _moveDownTimer.Stop();
-            _levelUpTimer.Stop();
-            _refreshCanvasTimer.Stop();
-        }
-
-
-        public void ResumeGame()
-        {
-            _moveDownTimer.Start();
-            _levelUpTimer.Start();
-            _refreshCanvasTimer.Start();
-        }
-
-        public void StopGame()
-        {
-            Board.GameBoard = new Field[20, 10];
-            Board.CurrentBlock = null;
-            RefreshCanvas();
-            _moveDownTimer.Stop();
-            _levelUpTimer.Stop();
-            _refreshCanvasTimer.Stop();
-
-        }
-
         private void RefreshCanvas()
         {
             CanvasRectItems.Clear();
@@ -195,7 +180,6 @@ namespace Tetris.Model
                 }
             }
         }
-
         private void InitializeTimers()
         {
             _levelUpTimer = new DispatcherTimer();
