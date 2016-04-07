@@ -161,7 +161,7 @@ namespace Tetris.ViewModels
         public Game Game { get; set; }
 
 
-        public void ExecuteFilterView(ActionExecutionContext context)
+        public void ExecuteKeyboardCommand(ActionExecutionContext context)
         {
             var keyArgs = context.EventArgs as KeyEventArgs;
 

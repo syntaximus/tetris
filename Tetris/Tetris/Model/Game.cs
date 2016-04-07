@@ -23,6 +23,7 @@ namespace Tetris.Model
         public ObservableCollection<RectItem> CanvasRectItems;
         public ObservableCollection<RectItem> CanvasNextBlockRectItems;
 
+        public bool GamePaused { get; set; }
         public int Level { get; set; }
         public int Points { get; set; }
         public Board Board { get; set; }
@@ -66,6 +67,17 @@ namespace Tetris.Model
                     }
                     Points += (int)Math.Pow(Board.CheckRows(), 2) * Level;
                     break;
+                case Key.Escape:
+                    if (GamePaused)
+                    {
+                        ResumeGame();
+                    }
+                    else
+                    {
+                        PauseGame();
+                    }
+                    GamePaused = !GamePaused;
+                    break;
             }
 
         }
@@ -86,6 +98,21 @@ namespace Tetris.Model
             Level = 1;
             CanvasRectItems = rectItems;
             InitializeTimers();
+        }
+
+        public void PauseGame()
+        {
+            _moveDownTimer.Stop();
+            _levelUpTimer.Stop();
+            _refreshCanvasTimer.Stop();
+        }
+
+
+        public void ResumeGame()
+        {
+            _moveDownTimer.Start();
+            _levelUpTimer.Start();
+            _refreshCanvasTimer.Start();
         }
 
         public void StopGame()

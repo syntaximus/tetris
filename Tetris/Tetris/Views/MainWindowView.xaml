@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:cm="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
         Title="Tetris" Height="690" Width="315" ResizeMode="NoResize"
-        cm:Message.Attach="[Event KeyDown] = [Action ExecuteFilterView($executionContext)]"
+        cm:Message.Attach="[Event KeyDown] = [Action ExecuteKeyboardCommand($executionContext)]"
         HorizontalAlignment="Center" Background="#FF857171">
     <Grid>
         <Label x:Name="TitleLabel" HorizontalAlignment="Center" Visibility="{Binding MenuVisibility}" Margin="0,70,0,0"
