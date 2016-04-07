@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
@@ -168,31 +170,11 @@ namespace Tetris.Model
         {
             CanvasNextBlockRectItems.Clear();
             Model.Blocks.Block block = null;
-            switch (Board.NextBlock)
-            {
-                case 0:
-                    block = new BlockI();
-                    break;
-                case 1:
-                    block = new BlockJ();
-                    break;
-                case 2:
-                    block = new BlockL();
-                    break;
-                case 3:
-                    block = new BlockO();
-                    break;
-                case 4:
-                    block = new BlockS();
-                    break;
-                case 5:
-                    block = new BlockT();
-                    break;
-                case 6:
-                    block = new BlockZ();
-                    break;
-
-            }
+            IEnumerable<Blocks.Block> exporters = (typeof(Blocks.Block)
+                .Assembly.GetTypes()
+                .Where(t => t.IsSubclassOf(typeof(Blocks.Block)) && !t.IsAbstract)
+                .Select(t => (Blocks.Block)Activator.CreateInstance(t)));
+            block = exporters.ToList()[Board.NextBlock];
             for (int i = 0; i != block.Surface.GetLength(0); i++)
             {
                 for (int j = 0; j != block.Surface.GetLength(1); j++)

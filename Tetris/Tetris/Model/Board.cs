@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 using Tetris.Model.Blocks;
@@ -124,6 +126,32 @@ namespace Tetris.Model
             }
         }
 
+        /// <summary>
+        /// Właściwość która zwarca informacje czy blok można postawić na planszy (czy nie zachodzi kolizja z innymi blokami).
+        /// </summary>
+        public bool CanPlaceCurrentBlock
+        {
+            get
+            {
+                for (int i = 0; i != CurrentBlock.Surface.GetLength(0); i++)
+                {
+                    for (int j = 0; j != CurrentBlock.Surface.GetLength(1); j++)
+                    {
+                        if (CurrentBlock.Surface[i, j])
+                        {
+                            if (CurrentBlock.Y + i < 20 && CurrentBlock.X - 2 + j >= 0 &&
+                                GameBoard[CurrentBlock.Y + i, CurrentBlock.X - 2 + j] != null &&
+                                GameBoard[CurrentBlock.Y + i, CurrentBlock.X - 2 + j].Active)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+
         public void CurrentBlockMoveLeft()
         {
             if (CanCurrentBlockMoveLeft)
@@ -192,37 +220,17 @@ namespace Tetris.Model
         public bool GenerateNewCurrentBlock()
         {
             Random rand = new Random();
-            switch (NextBlock)
-            {
-                case 0:
-                    CurrentBlock = new BlockI();
-                    break;
-                case 1:
-                    CurrentBlock = new BlockJ();
-                    break;
-                case 2:
-                    CurrentBlock = new BlockL();
-                    break;
-                case 3:
-                    CurrentBlock = new BlockO();
-                    break;
-                case 4:
-                    CurrentBlock = new BlockS();
-                    break;
-                case 5:
-                    CurrentBlock = new BlockT();
-                    break;
-                case 6:
-                    CurrentBlock = new BlockZ();
-                    break;
+            IEnumerable<Block> exporters = (typeof (Block)
+                .Assembly.GetTypes()
+                .Where(t => t.IsSubclassOf(typeof (Block)) && !t.IsAbstract)
+                .Select(t => (Block) Activator.CreateInstance(t)));
+            CurrentBlock = exporters.ToList()[NextBlock];
 
-            }
             CurrentBlock.X = 5;
             CurrentBlock.Y = 0;
-            NextBlock = rand.Next(0, 6);
-            if (!CanCurrentBlockMoveLeft && !CanCurrentBlockMoveRight && !CanCurrentBlockRotate)
-                return false;
-            return true;
+            NextBlock = rand.Next(0, exporters.Count());
+
+            return CanPlaceCurrentBlock;
         }
 
         internal void SaveCurrentBlockInBoard()

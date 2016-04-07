@@ -2,6 +2,7 @@
 
 namespace Tetris.Model.Blocks
 {
+
     internal class BlockZ : Block
     {
         public BlockZ()

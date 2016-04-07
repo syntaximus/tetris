@@ -66,7 +66,7 @@
   <Class Name="Tetris.Model.Board">
     <Position X="6" Y="0.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAACAoQACAkBAAACAAACIAAAAAAAAgAAAAGAAAQAQA=</HashCode>
+      <HashCode>AAgACAoQACAkBAAACAAACIBAAAAAAAgAAAAGAAAQAQA=</HashCode>
       <FileName>Model\Board.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -85,7 +85,7 @@
   <Class Name="Tetris.Model.Game">
     <Position X="9.25" Y="0.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>CIAAAFACACAEkAAAAAQEQIAABAAEAIABAAACAiEQAAg=</HashCode>
+      <HashCode>CIAAAlgDACAEkAAAAAQEUIAABAQEAIABAAACAiEQAAg=</HashCode>
       <FileName>Model\Game.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -99,7 +99,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>IAEIAAARAgBAgAAAAAAQAAAAFAgYIEAJIJBgUAAIIAA=</HashCode>
+      <HashCode>IAEIAAARAgBAgAAAAAAQAAAAHAgYIEAJIJBgQAAIIAA=</HashCode>
       <FileName>ViewModels\MainWindowViewModel.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
