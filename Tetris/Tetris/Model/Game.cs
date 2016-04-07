@@ -36,7 +36,7 @@ namespace Tetris.Model
             Board = new Board();
             Board.GenerateNewCurrentBlock();
             Points = 0;
-            Level = 1;
+            Level = 8;
             CanvasRectItems = rectItems;
             InitializeTimers();
         }
@@ -189,7 +189,7 @@ namespace Tetris.Model
                     EndGame();
                 }
                 Points += (int)Math.Pow(Board.CheckRows(), 2) * Level;
-                _moveDownTimer.Interval = new TimeSpan(0, 0, 0, 0, Level < 8 ? 1000 - (Level * 100) : 200);
+                _moveDownTimer.Interval = new TimeSpan(0, 0, 0, 0, Level < 8 ? 1100 - (Level * 100) : 100 + (int)(200* (1/(0.5*Level - 3))));
             }
         }
         #endregion
