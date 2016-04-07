@@ -37,12 +37,12 @@
             <TextBlock TextAlignment="Right">Następny<LineBreak />Klocek</TextBlock>
         </Label>
         <Label x:Name="LevelLabel" Content="Poziom:" HorizontalAlignment="Left" Visibility="{Binding GameVisibility}"
-               Margin="100,10,0,0" VerticalAlignment="Top" />
+               Margin="120,10,0,0" VerticalAlignment="Top" />
         <Label x:Name="PointsLabel" Content="Punkty:" HorizontalAlignment="Left" Visibility="{Binding GameVisibility}"
-               Margin="180,10,0,0" VerticalAlignment="Top" />
-        <Label x:Name="Level" HorizontalAlignment="Left" Visibility="{Binding GameVisibility}" Margin="147,10,0,0"
+               Margin="200,10,0,0" VerticalAlignment="Top" />
+        <Label x:Name="Level" HorizontalAlignment="Left" Visibility="{Binding GameVisibility}" Margin="167,10,0,0"
                VerticalAlignment="Top" />
-        <Label x:Name="Points" HorizontalAlignment="Left" Visibility="{Binding GameVisibility}" Margin="222,10,0,0"
+        <Label x:Name="Points" HorizontalAlignment="Left" Visibility="{Binding GameVisibility}" Margin="242,10,0,0"
                VerticalAlignment="Top" />
 
         <ItemsControl ItemsSource="{Binding RectItems}">
@@ -64,8 +64,26 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Canvas Name="NextBlockView" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="30"
+        <ItemsControl ItemsSource="{Binding NextBlockRectItems}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Name="NextBlockView" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="30"
                 Margin="70,10,0,0" Visibility="{Binding GameVisibility}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding X}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Width="{Binding Width}" Height="{Binding Height}" Fill="{Binding Color}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
         <MediaElement Height="120" Margin="44,344,74,0" LoadedBehavior="Play" Name="SongElement"
                       VerticalAlignment="Top" Source="Views/Sounds/BackGroundSong.mp3" />
 

@@ -6,7 +6,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Microsoft.Win32.SafeHandles;
+using Tetris.Model.Blocks;
 using Tetris.ViewModels;
+using Block = System.Windows.Documents.Block;
 
 namespace Tetris.Model
 {
@@ -19,6 +21,8 @@ namespace Tetris.Model
 
         #region PROPERTIES
         public ObservableCollection<RectItem> CanvasRectItems;
+        public ObservableCollection<RectItem> CanvasNextBlockRectItems;
+
         public int Level { get; set; }
         public int Points { get; set; }
         public Board Board { get; set; }
@@ -31,13 +35,14 @@ namespace Tetris.Model
         #endregion
 
         #region PUBLIC METHODS
-        public Game(ObservableCollection<RectItem> rectItems)
+        public Game(ObservableCollection<RectItem> rectItems, ObservableCollection<RectItem> nextBlockRectItems)
         {
             Board = new Board();
             Board.GenerateNewCurrentBlock();
             Points = 0;
-            Level = 8;
+            Level = 1;
             CanvasRectItems = rectItems;
+            CanvasNextBlockRectItems = nextBlockRectItems;
             InitializeTimers();
         }
         public void KeyboardEventHandler(KeyEventArgs keyArgs)
@@ -85,7 +90,7 @@ namespace Tetris.Model
 
         public void StopGame()
         {
-            Board.GameBoard = new Field[20,10];
+            Board.GameBoard = new Field[20, 10];
             Board.CurrentBlock = null;
             RefreshCanvas();
             _moveDownTimer.Stop();
@@ -132,6 +137,55 @@ namespace Tetris.Model
                 }
             }
         }
+        private void RefreshNextBlockCanvas()
+        {
+            CanvasNextBlockRectItems.Clear();
+            Model.Blocks.Block block = null;
+            switch (Board.NextBlock)
+            {
+                case 0:
+                    block = new BlockI();
+                    break;
+                case 1:
+                    block = new BlockJ();
+                    break;
+                case 2:
+                    block = new BlockL();
+                    break;
+                case 3:
+                    block = new BlockO();
+                    break;
+                case 4:
+                    block = new BlockS();
+                    break;
+                case 5:
+                    block = new BlockT();
+                    break;
+                case 6:
+                    block = new BlockZ();
+                    break;
+
+            }
+            for (int i = 0; i != block.Surface.GetLength(0); i++)
+            {
+                for (int j = 0; j != block.Surface.GetLength(1); j++)
+                {
+                    if (block.Surface[i, j])
+                    {
+                        var add = new RectItem();
+                        add.Height = BlockHeight/3;
+                        add.Width = BlockWidth/3;
+                        add.X = BlockWidth/3 * (j);
+                        add.X += 3;
+                        add.Y = BlockHeight/3 * i;
+                        add.Y -= 3;
+                        add.Color = block.Color;
+                        CanvasNextBlockRectItems.Add(add);
+                    }
+                }
+            }
+        }
+
         private void InitializeTimers()
         {
             _levelUpTimer = new DispatcherTimer();
@@ -152,18 +206,9 @@ namespace Tetris.Model
         }
         private void dispatcherTimerRefreshCanvas_Tick(object sender, EventArgs e)
         {
-            try
-            {
-
-                RefreshCanvas();
-                CommandManager.InvalidateRequerySuggested();
-            }
-            catch (Exception ew)
-            {
-
-
-                throw ew;
-            }
+            RefreshCanvas();
+            RefreshNextBlockCanvas();
+            CommandManager.InvalidateRequerySuggested();
         }
         private void dispatcherTimerLevelUp_Tick(object sender, EventArgs e)
         {
@@ -189,7 +234,7 @@ namespace Tetris.Model
                     EndGame();
                 }
                 Points += (int)Math.Pow(Board.CheckRows(), 2) * Level;
-                _moveDownTimer.Interval = new TimeSpan(0, 0, 0, 0, Level < 8 ? 1100 - (Level * 100) : 100 + (int)(200* (1/(0.5*Level - 3))));
+                _moveDownTimer.Interval = new TimeSpan(0, 0, 0, 0, Level < 8 ? 1100 - (Level * 100) : 100 + (int)(200 * (1 / (0.5 * Level - 3))));
             }
         }
         #endregion

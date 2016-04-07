@@ -57,6 +57,7 @@ namespace Tetris.ViewModels
             RecordsVisibility = Visibility.Hidden;
             GameVisibility = Visibility.Hidden;
             RectItems = new ObservableCollection<RectItem>();
+            NextBlockRectItems = new ObservableCollection<RectItem>();
         }
 
         public Visibility MenuVisibility
@@ -142,6 +143,8 @@ namespace Tetris.ViewModels
         public string PlayerName { get; set; }
 
         public ObservableCollection<RectItem> RectItems { get; set; }
+        public ObservableCollection<RectItem> NextBlockRectItems { get; set; }
+
 
         public BindableCollection<Record> RecordsList
         {
@@ -170,16 +173,10 @@ namespace Tetris.ViewModels
 
         public string ProcessPlayerName(string playerName)
         {
-            if (playerName.Length > 16)
-                playerName = playerName.Remove(16);
-            else
-            {
-                int buforLength = playerName.Length;
-                for (int i = 0; i != 16 - buforLength; i++)
-                {
-                    playerName += " ";
-                }
-            }
+            if (playerName == null)
+                return "<<nieznane>>";
+            if (playerName.Length > 14)
+                playerName = playerName.Remove(14);
             return playerName;
             
         }
@@ -239,7 +236,7 @@ namespace Tetris.ViewModels
         {
             try
             {
-                Game = new Game(RectItems);
+                Game = new Game(RectItems, NextBlockRectItems);
                 Game.GameCompleted += delegate (object sender, EventArgs args)
                 {
                     NotifyOfPropertyChange("RecordPoints");

@@ -12,8 +12,10 @@ namespace Tetris.Model
         public Board()
         {
             GameBoard = new Field[20, 10];
+            Random rand = new Random();
+            NextBlock = rand.Next(0, 6);
         }
-
+        public int NextBlock { get; set; }
         public Field[,] GameBoard { get; set; }
         public Block CurrentBlock { get; set; }
         /// <summary>
@@ -190,7 +192,7 @@ namespace Tetris.Model
         public bool GenerateNewCurrentBlock()
         {
             Random rand = new Random();
-            switch (rand.Next(0, 6))
+            switch (NextBlock)
             {
                 case 0:
                     CurrentBlock = new BlockI();
@@ -217,6 +219,7 @@ namespace Tetris.Model
             }
             CurrentBlock.X = 5;
             CurrentBlock.Y = 0;
+            NextBlock = rand.Next(0, 6);
             if (!CanCurrentBlockMoveLeft && !CanCurrentBlockMoveRight && !CanCurrentBlockRotate)
                 return false;
             return true;
