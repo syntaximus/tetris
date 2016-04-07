@@ -10,69 +10,70 @@
   <Class Name="Tetris.Model.Blocks.Block" Collapsed="true">
     <Position X="4" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEEAAAAAAAAAAAgAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAEAAEBBgAAAAAEAAAAAAAAAAAAgAAAYAA=</HashCode>
       <FileName>Model\Blocks\Block.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Tetris.Model.Blocks.BlockI" Collapsed="true">
     <Position X="7.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Blocks\BlockI.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Tetris.Model.Blocks.BlockJ" Collapsed="true">
     <Position X="11.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Blocks\BlockJ.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Tetris.Model.Blocks.BlockL" Collapsed="true">
     <Position X="0.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Blocks\BlockL.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Tetris.Model.Blocks.BlockO" Collapsed="true">
     <Position X="2.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Blocks\BlockO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Tetris.Model.Blocks.BlockS" Collapsed="true">
     <Position X="5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Blocks\BlockS.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Tetris.Model.Blocks.BlockT" Collapsed="true">
     <Position X="9.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Blocks\BlockT.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Tetris.Model.Blocks.BlockZ" Collapsed="true">
     <Position X="13.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Blocks\BlockZ.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Tetris.Model.Board" Collapsed="true">
     <Position X="4.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAACAoQACAkBAAACAAACIAAAAAAAAgAAAAGAAAQAQA=</HashCode>
       <FileName>Model\Board.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="GameBoard" />
       <Property Name="CurrentBlock" />
     </ShowAsAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Tetris.Model.Field" Collapsed="true">
     <Position X="1" Y="2.5" Width="1.5" />
@@ -84,12 +85,13 @@
   <Class Name="Tetris.Model.Game" Collapsed="true">
     <Position X="7" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAIAAAAAAAAABAABgAiAAAAE=</HashCode>
+      <HashCode>CIAAAFACACAEkAAAAAAEQIAAAAAEAIABAAACAiEQAAg=</HashCode>
       <FileName>Model\Game.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Board" />
     </ShowAsAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Tetris.ViewModels.MainWindowViewModel" Collapsed="true">
     <Position X="6.75" Y="3.5" Width="2" />

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Linq;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 using Tetris.Model.Blocks;
 using Tetris.ViewModels;
 
 namespace Tetris.Model
 {
-    public class Board
+    public class Board : IDisposable
     {
         public Board()
         {
@@ -140,23 +143,51 @@ namespace Tetris.Model
                 CurrentBlock.TryRotate();
             }
         }
-        public void CurrentBlockMoveDown()
+        public bool CurrentBlockMoveDown()
         {
-            if (CanCurrentBlockMoveDown)
+            if (CanCurrentBlockMoveDown && CurrentBlock.TryMoveDown())
             {
-                CurrentBlock.TryMoveDown();
+                return true;
             }
             else
             {
                 SaveCurrentBlockInBoard();
-                GenerateNewCurrentBlock();
+                return GenerateNewCurrentBlock();
             }
         }
 
 
+        public int CheckRows()
+        {
+            int deletedRows = 0;
+            for (int i = 0; i != 20; i++)
+            {
+                for (int j = 0; j != 10; j++)
+                {
+                    if (GameBoard[i, j] == null || !GameBoard[i, j].Active)
+                        break;
+                    if (j == 9)
+                    {
+                        DeleteRow(i);
+                        deletedRows++;
+                    }
+                }
+            }
+            return deletedRows;
+        }
 
+        private void DeleteRow(int row)
+        {
+            for (int i = row; i != 0; i--)
+            {
+                for (int j = 0; j != 10; j++)
+                {
+                    GameBoard[i, j] = GameBoard[i - 1, j];
+                }
+            }
+        }
 
-        public void GenerateNewCurrentBlock()
+        public bool GenerateNewCurrentBlock()
         {
             Random rand = new Random();
             switch (rand.Next(0, 6))
@@ -186,6 +217,9 @@ namespace Tetris.Model
             }
             CurrentBlock.X = 5;
             CurrentBlock.Y = 0;
+            if (!CanCurrentBlockMoveLeft && !CanCurrentBlockMoveRight && !CanCurrentBlockRotate)
+                return false;
+            return true;
         }
 
         internal void SaveCurrentBlockInBoard()
@@ -201,5 +235,29 @@ namespace Tetris.Model
                 }
             }
         }
+
+
+        #region IDisposable
+        private bool _disposed = false;
+        private SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+            if (disposing)
+            {
+                handle.Dispose();
+                GameBoard = null;
+                CurrentBlock = null;
+
+            }
+            _disposed = true;
+        }
+        #endregion
     }
 }

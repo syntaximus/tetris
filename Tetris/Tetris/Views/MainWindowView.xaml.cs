@@ -13,15 +13,15 @@ namespace Tetris.Views
         public MainWindowView()
         {
             InitializeComponent();
-            Rectangle rect;
-            rect = new Rectangle();
-            rect.Stroke = new SolidColorBrush(Colors.Black);
-            rect.Fill = new SolidColorBrush(Colors.Red);
-            rect.Width = 10;
-            rect.Height = 40;
-            Canvas.SetLeft(rect, 10);
-            Canvas.SetTop(rect, -5);
-            NextBlockView.Children.Add(rect);
+            //Rectangle rect;
+            //rect = new Rectangle();
+            //rect.Stroke = new SolidColorBrush(Colors.Black);
+            //rect.Fill = new SolidColorBrush(Colors.Red);
+            //rect.Width = 10;
+            //rect.Height = 40;
+            //Canvas.SetLeft(rect, 10);
+            //Canvas.SetTop(rect, -5);
+            //NextBlockView.Children.Add(rect);
         }
     }
 }

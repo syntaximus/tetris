@@ -14,6 +14,18 @@
                Margin="0,200,0,0" VerticalAlignment="Top">
             <TextBlock Background="{x:Null}" FontSize="24" FontWeight="Bold" FontFamily="Papyrus">by Maciej Jakubiak</TextBlock>
         </Label>
+        <Label HorizontalContentAlignment="Center" Content="Gratulacje! Zdobyłeś" Visibility="{Binding EndGameVisibility}" HorizontalAlignment="Center"
+                Margin="0,150,0,0" VerticalAlignment="Top" Height="40" Width="200" FontSize="18" />
+        <Label Name="RecordPoints" FontFamily="Showcard Gothic" HorizontalContentAlignment="Center" Visibility="{Binding EndGameVisibility}" HorizontalAlignment="Center"
+                Margin="0,220,0,0" VerticalAlignment="Top" Height="60" Width="200" FontSize="28"/>
+        <Label HorizontalContentAlignment="Center" Content="punktów." Visibility="{Binding EndGameVisibility}" HorizontalAlignment="Center"
+                Margin="0,280,0,0" VerticalAlignment="Top" Height="40" Width="200" FontSize="18"/>
+        <Label HorizontalContentAlignment="Center" Content="Wpisz swoją nazwę tutaj:" Visibility="{Binding EndGameVisibility}" HorizontalAlignment="Center"
+                Margin="0,330,0,0" VerticalAlignment="Top" Height="40" Width="250" FontSize="18" />
+        <TextBox x:Name="PlayerName" Visibility="{Binding EndGameVisibility}" HorizontalAlignment="Center"
+                Margin="0,370,0,0" VerticalAlignment="Top" Height="40" Width="145" FontSize="18.667" />
+        <Button x:Name="SaveRecord" Content="Zapisz wynik" Visibility="{Binding EndGameVisibility}" HorizontalAlignment="Center"
+                Margin="0,450,0,0" VerticalAlignment="Top" Height="40" Width="175" />
         <Button x:Name="NewGame" Content="Nowa gra" Visibility="{Binding MenuVisibility}" HorizontalAlignment="Center"
                 Margin="0,350,0,0" VerticalAlignment="Top" Height="40" Width="175" />
         <Button x:Name="Records" Content="Najlepsze wyniki" Visibility="{Binding MenuVisibility}"
@@ -56,5 +68,27 @@
                 Margin="70,10,0,0" Visibility="{Binding GameVisibility}" />
         <MediaElement Height="120" Margin="44,344,74,0" LoadedBehavior="Play" Name="SongElement"
                       VerticalAlignment="Top" Source="Views/Sounds/BackGroundSong.mp3" />
+
+        <Label x:Name="RecordsTitleLabel" HorizontalAlignment="Center" Visibility="{Binding RecordsVisibility}" Margin="0,70,0,0"
+               VerticalAlignment="Top">
+            <TextBlock HorizontalAlignment="Center" Background="{x:Null}" FontSize="18.333" FontWeight="Bold" FontFamily="Showcard Gothic">
+                Najlepsze wyniki
+            </TextBlock>
+        </Label>
+        <ListBox Visibility="{Binding RecordsVisibility}" Width="260" x:Name="RecordsList" Margin="30,129,29,75" Background="#FF574646">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="5,0">
+                            <TextBlock Text="{Binding Player}" FontSize="21.333" FontFamily="Segoe UI Black" FontWeight="Bold" Foreground="#FFF1F1F1" />
+                            <TextBlock Text="{Binding Points}" FontSize="18.667" Foreground="White" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="RecordsOk" Content="Ok" Visibility="{Binding RecordsVisibility}"
+                HorizontalAlignment="Center" Margin="0,600,0,0" VerticalAlignment="Top" Height="40" Width="175" />
+
     </Grid>
 </Window>

@@ -1,0 +1,7 @@
+﻿Razem z Mateuszem ustaliliśmy, że:
+
+1. Jak klocek nie ma środka symetrii, to jest obracany względem jego drugiej ćwiartki.
+2. Każdy klocek powinien być innego koloru.
+3. Spadanie klocka w dół jest jest także zależne od użytkownika. Przy przyciśnięciu strzałki w dół klocek spada szybciej (gdyby nie ta opcja gra na początku byłaby toporna).
+4. Klocek po zetknięciu sie z podłożem od razu się nie blokuje. Gracz jeszcze będzie miał odrobinę czasu (zależną od poziomu - im większy, tym mniej czasu) na przesunięcie klocka tak jak to jest w normalnym tetrisie.
+5. Po zakończeniu gry można podać nazwę gracza, która będzie uwzględniona w wynikach.
