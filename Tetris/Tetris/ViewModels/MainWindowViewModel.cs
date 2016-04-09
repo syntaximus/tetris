@@ -292,7 +292,7 @@ namespace Tetris.ViewModels
                     }
                 }
                 records = records.OrderByDescending(x => x.Points).ToList();
-                if (records[records.Count - 1].Points < Int32.Parse(Points) || records.Count < 10)
+                if (records.Count < 10 || records[records.Count - 1].Points < Int32.Parse(Points))
                 {
                     NotifyOfPropertyChange("RecordPoints");
                     MenuVisibility = Visibility.Hidden;
