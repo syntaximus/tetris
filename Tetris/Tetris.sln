@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetris", "Tetris\Tetris.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetris.UnitTests", "Tetris.UnitTests\Tetris.UnitTests.csproj", "{E523F736-D4AA-44EA-958E-5481C93B4AAC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{60AAFB89-681F-4643-B491-09E26B690DE3}"
+	ProjectSection(SolutionItems) = preProject
+		Instrukcja.txt = Instrukcja.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
