@@ -24,12 +24,12 @@
 //            */
 //            Surface = new[,]
 //            {
-//                {true, false, false, true},
-//                {false, true, true, false},
-//                {false, true, true, false},
-//                {true, false, false, true}
+//                {true, true, true, true},
+//                {true, true, false, true},
+//                {true, false, true, true},
+//                {true, true, true, true}
 //            };
-//            Color = new SolidColorBrush(Colors.Pink);
+//            Color = new SolidColorBrush(Colors.MediumOrchid);
 //        }
 
 //        public override bool TryRotate()
