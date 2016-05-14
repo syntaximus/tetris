@@ -84,9 +84,22 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <MediaElement Height="120" Margin="44,344,74,0" LoadedBehavior="Play" Name="SongElement"
-                      VerticalAlignment="Top" Source="Views/Sounds/BackGroundSong.mp3" />
+        <MediaElement Name="SongElement" >
+            <MediaElement.Triggers>
+                <EventTrigger RoutedEvent="MediaElement.Loaded">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
 
+                                <MediaTimeline Source="Views/Sounds/BackGroundSong.mp3" Storyboard.TargetName="SongElement"  
+                 RepeatBehavior="Forever" />
+
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </MediaElement.Triggers>
+        </MediaElement>
         <Label x:Name="RecordsTitleLabel" HorizontalAlignment="Center" Visibility="{Binding RecordsVisibility}" Margin="0,70,0,0"
                VerticalAlignment="Top">
             <TextBlock HorizontalAlignment="Center" Background="{x:Null}" FontSize="18.333" FontWeight="Bold" FontFamily="Showcard Gothic">

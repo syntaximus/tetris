@@ -150,11 +150,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Zmiany.txt" />
-    <None Include="Resources\tetris_fh6_icon.ico" />
     <Content Include="Views\Sounds\BackGroundSong.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Zmiany.txt" />
+    <None Include="Resources\tetris_fh6_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
