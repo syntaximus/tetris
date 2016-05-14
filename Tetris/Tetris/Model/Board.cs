@@ -15,7 +15,6 @@ namespace Tetris.Model
         /// <summary>
         /// Właściwość która zwarca informacje czy nie dojdzie do koloizji aktualnie spadającego bloku z jakimś innym blokiem po przesunięciu klocka o jeden w dół.
         /// </summary>
-
         public bool CanCurrentBlockMoveDown
         {
             get
@@ -145,10 +144,19 @@ namespace Tetris.Model
             }
         }
 
+        /// <summary>
+        /// Właściwość przechowująca informacje o następnym bloku, który będzie opadać. Wartość od 0 do ilości klas, które dziedziczą po klasie Block - 1.
+        /// </summary>
         public int NextBlock { get; set; }
 
+        /// <summary>
+        /// Tablica pól na który odbywa się gra.
+        /// </summary>
         public Field[,] GameBoard { get; set; }
 
+        /// <summary>
+        /// Aktualnie opadający blok.
+        /// </summary>
         public Block CurrentBlock { get; set; }
         #endregion
 
@@ -228,6 +236,10 @@ namespace Tetris.Model
         #endregion
 
         #region PRIVATE METHODS
+        /// <summary>
+        /// Usuwa wiersz z planszy.
+        /// </summary>
+        /// <param name="row">Numer wiersza, który usuwamy.</param>
         private void DeleteRow(int row)
         {
             for (int i = row; i != 0; i--)
@@ -238,6 +250,10 @@ namespace Tetris.Model
                 }
             }
         }
+
+        /// <summary>
+        /// Zapisuje aktualnie opadający blok do planszy. Od tej pory blok staje się integralną częścią planszy, dopóki nie zostanie usunięty jakiś wiersz/nastąpi koniec gry.
+        /// </summary>
         private void SaveCurrentBlockInBoard()
         {
             for (int i = 0; i != CurrentBlock.Surface.GetLength(0); i++)

@@ -1,0 +1,21 @@
+Poni¿sza instrukcja zawiera informacje jak korzystaæ z aplikacji Tetris.
+
+
+Po odpaleniu aplikacji pojawia siê menu g³ówne. W menu g³ównym mo¿na wybraæ trzy opcje "Nowa gra", "Najlepsze wyniki", "Wyjœcie".
+	1. Po klikniêciu w przycisk "nowa gra" u¿ytkownik mo¿e rozpocz¹æ grê. Na pocz¹tku bêdzie jeden opadaj¹cy klocek. Zasady tak jak
+	w zwyk³ym Tetrisie.
+		Sterowanie:
+			- Pauza (ESC)
+			- Ruch klocka w lewo (STRZA£KA W LEWO)
+			- Ruch klocka w prawo (STRZ£KA W PRAWO)
+			- Ruch klocka w dó³w (STRZA£KA W DÓ£)
+			- Obrót klocka o 90 stopni (STRZ£KA W GÓRÊ)
+		Strza³ki mo¿na przytrzymaæ. Wtedy przesuwanie/opadanie odbêdzie siê szybciej.
+	Po zakoñceniu gry, je¿eli wynik u¿ytkownika by³ wy¿szy ni¿ dziesi¹ty najlepszy wynik, gracz zostanie poproszony o podanie
+	swojego nicku. Po klikniêciu w przycisk "Zapisz" wynik gracza zostanie zapisany w liœcie najlepszych wyników.
+	Jeœli wynik nie znajdowa³ sie wœród dziesiêciu najlepszych wyników, gracz zostanie od razu przeniesiony do menu g³ównego.
+	
+	2. Po klikniêciu w przycisk "najlepsze wyniki" pojawia siê ekran z 10 najlepszymy wynikami. Aby wyjœæ z tego ekranu
+	nale¿y klikn¹æ przycisk "OK".
+
+	3. Po klikniêciu w opcje "Wyjœcie" aplikacja zostaje zamkniêta.
